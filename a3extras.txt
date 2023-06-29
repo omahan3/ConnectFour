@@ -1,0 +1,57 @@
+The following is extra information. Any changes you do that follow the bottom must not be present
+in your submitted file!
+
+A few people have asked me about doing cooler things with the AI or 
+having their AI play against their friends AI. This is a couple suggestions
+for how to do this. Make sure to do this only AFTER you have finished 
+the rest of the assignment and keep a backup copy of the assignment. You
+will be handing in the BACKUP copy.
+
+
+1)Making your AI smarter:
+
+There are several improvements you can make to the heuristic. For example, the 
+heuristic as implemented doesn't detect cases where a player has 2 in a row, then
+a gap of 1, and then another piece.
+
+If you want to add stuff to your heuristic but keep it close to the requirements for the assignment,
+create a boolean that will affect whether to be more complicated or not. For example you could do the 
+following
+
+public int heuristic(Board b, Piece turn) {
+   boolean isAdvanced = true;
+   if (isAdvanced) {
+       return assignmentHeuristic(b,turn) + myHeuristic(b,turn)
+   }
+   else {
+       return assignmentHeuristic(b, turn) + myHeurstic(b,turn);
+   }
+
+}
+
+assignmentHeuristic() would then be what is required. In this way, you can switch back and forth between the two easily.
+Again though, make sure when you hand in that you are using just the assignment heuristic as you won't
+pass the unit tests.
+
+2)Playing against each other.
+
+To play against another AI, there are a few (small) changes you'll have to make.
+
+Strong suggestion is to make a backup here too before making any changes.
+
+1)Put all the files from person on the same machine. (ComputerPlayer,Board, Player,HumanPlayer,ConectFour, Piece, etc)
+2)Rename the OTHER player's ComputerPlayer.java to be ComputerPlayer2.java (and change the class name accordingly)
+3)Inside the ConnectFour.java file, search for the method promptForNextPlayer() . In here, you should be able to add a new 
+condition  that checks if the user has entered a different letter--say "o" 
+
+If the user has entered a new letter, then do the same as before except create a new
+
+ComputerPlayer2()
+
+instead of ComputerPlayer()
+
+4)Compile all files together. (Same as before except you'll add an additional file ComputerPlayer2.java
+
+This will make it so that the player for whom you typed c are the first AI and all players for whom you type o are the second
+
+

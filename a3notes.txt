@@ -1,0 +1,68 @@
+Here are some notes and summary of a few corrections for a3: (All errors are updated in the specification)
+
+1)Make sure to submit Board.java as well. (Originally this was missing from the list of files to submit at the end)
+
+2)The constants NUMROWS and NUMCOLS should be made public so that other classes have access to them. 
+Normally, it is considered bad style to make variables public, and it is better to use getters and setters
+to set them. However, with a final, it is not quite as bad. (Also practically to work around this would require
+adding a new method getRows() and getCols() so this is easier)
+
+3)The projection equation was originally wrong. The right equation is 
+
+u dot v       
+-------    v
+|v| |v|
+
+
+This has been updated.
+
+Also note that there is no test case for projection. You should write one yourself.
+
+4)The normalize() method should do nothing if the vector magnitude is 0. (i.e. everything should stay the same) . 
+The projectOnto() method should just return the vector v in this case. (Or any vector that is 0,0,0)
+
+Since this method does NOT create a new vector and returns void, you will have to use it a bit differently:
+
+Vector v1 = new Vector(1,1,1);
+Vector v2 = new Vector(2,3,5);
+Vector v3 = v1.Add(v2) ;  //returns a new vector so OK
+ System.out.println( v1.Add(v3).calculateMagnitude()); //v1.Add(v3) returns a new vector. 
+      //Since it returns a new vector, you can call calculateMagnitude() on this new vector
+      //since calculateMagnitude returns a double, you can print it
+
+System.out.println(v3.normalize());
+    //ERROR: v3.normalize() returns void. You can't print void.
+
+The difference is that the normalize() method changes the original vector. It does not create a new one.
+The other methods create a new vector.
+
+5)The method should be called calculateMagnitude() (Be consistant with the test case file)
+
+6)the static method GenerateEmptyBoard is allowed to use the literals 6 and 8 to create an empty board. 
+The reason that it is okay here but not in other cases is this method is designed specifically for a connect four 
+game. Perhaps a better name would be GenerateEmptyConnectFourBoard  . All other methods are meant to work
+for any other kind of board size. (In fact extending it to something like checkers or even chess would not
+be too difficult)
+
+7)If your AI player is too slow, you may modify the line at the top of ComputerPlayer.java which say MAX_PLY_DEPTH=6 to be a smaller number, like 2.
+You should change this back before submitting, but we won't be looking at the value of that variable anyway.
+
+8)Your heuristic should return -900 in the case of a fork (a previous version of the slides said -990. If you do this, the test case will fail)
+
+9)A couple of the heuristic tests use ``unrealistic" connect 4 boards. That is, they have positions that are not legal. Your heuristic should work
+regardless of whether the board is a legal position:
+
+e.g.
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ O
+_ _ _ _ _ _ _ _
+_ _ _ _ _ _ _ _
+X X X _ _ _ _ _
+
+is not technically a reachable position as the piece in the right most column is floating. In addition X has had too many
+turns. However, your heuristic should still count this as 1 group of 3 connected.
+
+10)Clarification on the getWinner() method.
+
+Your method should detect any time there are 4 *consecutive* in one row, column or diagonal since that is what it means to win in connect four (hence the name :)  )
